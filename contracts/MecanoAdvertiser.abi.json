@@ -223,7 +223,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getTotalCampaigners",
+		"name": "getTotalCampaignersers",
 		"outputs": [
 			{
 				"internalType": "uint256",
