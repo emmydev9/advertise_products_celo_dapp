@@ -40,9 +40,13 @@ contract MecanoAdvertiser {
 	// declare a variable ads the store an array of all Ads campaign.
 	Ads[] ads;
 	function fundCampaign() public payable {
+		require(msg.value >= campaignPrice, "The minimum funding is 1 cUsd");
         emit Deposit(msg.sender, msg.value);
         balances[owner] += msg.value;
-		balances[msg.sender] += campaignPrice;
+		if (msg.sender != owner)
+		{
+			balances[msg.sender] += msg.value;
+		}
     }
 	function withdrawAccountFunds(uint amount) public payable isOwner{
         require(balances[owner] >= amount, "Insufficient funds");
