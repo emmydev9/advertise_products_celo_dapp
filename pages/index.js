@@ -51,7 +51,7 @@ export default function Home() {
           draggable: true,
           progress: undefined,
         });
-        getallCampaign();
+        getAllads();
       } else {
         toast.warn("Make sure you have Celo Extension wallet Connected", {
           position: "top-right",
@@ -105,7 +105,7 @@ export default function Home() {
 
       kit.defaultAccount = accounts[0];
       setCurrentAccount(accounts[0]);
-      getallCampaign();
+      getAllads();
     } catch (error) {
       console.log(error);
     }
@@ -114,7 +114,7 @@ export default function Home() {
   /*
    * Create a method that gets all campaign from your contract
    */
-  const getallCampaign = async () => {
+  const getAllads = async () => {
     try {
       const { celo } = window;
 
@@ -129,10 +129,10 @@ export default function Home() {
         );
 
         /*
-         * Call the getallCampaign method from your Smart Contract
+         * Call the getAllads method from your Smart Contract
          */
         const campaigns = await campaignPortalContract.methods
-          .getallCampaign()
+          .getAllads()
           .call();
         /*
          * We only need address, timestamp, name, and message in our UI so let's
@@ -268,7 +268,7 @@ export default function Home() {
           progress: undefined,
         });
 
-        getallCampaign();
+        getAllads();
       } else {
         console.log("Celo object doesn't exist!");
       }
@@ -325,7 +325,7 @@ export default function Home() {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
                   type="text"
-                  placeholder="Name"
+                  placeholder="Brand Name"
                   onChange={handleOnNameChange}
                   required
                 />
@@ -342,7 +342,7 @@ export default function Home() {
                 <textarea
                   className="form-textarea mt-1 block w-full shadow appearance-none py-2 px-3 border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   rows="3"
-                  placeholder="Message"
+                  placeholder="Product Description"
                   id="message"
                   onChange={handleOnMessageChange}
                   required
