@@ -4,7 +4,7 @@ import { newKitFromWeb3 } from "@celo/contractkit";
 import Web3 from "web3";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
-import MecanoAdvertiser from "../contracts/MecanoAdvertiser.abi.json";
+import mecanoAdvertiserAbi from "../contracts/MecanoAdvertiser.abi.json";
 import { contractAddress, cUSDContractAddress } from "../utils/constants";
 
 export default function Home() {
@@ -124,7 +124,7 @@ export default function Home() {
         const kit = newKitFromWeb3(web3);
 
         const campaignPortalContract = new kit.web3.eth.Contract(
-          MecanoAdvertiser,
+          mecanoAdvertiserAbi,
           contractAddress
         );
 
@@ -143,7 +143,7 @@ export default function Home() {
             address: campaign.giver,
             timestamp: new Date(campaign.timestamp * 1000),
             message: campaign.message,
-            name: campaign.name,
+            name: campaign.name
           };
         });
 
@@ -159,18 +159,39 @@ export default function Home() {
     }
   };
 
-  async function fundCampaign(_price) {
+  async function fundCampaign() {
+    try {
+    const { celo } = window;
+    if (celo){
     const web3 = new Web3(celo);
 
     const kit = newKitFromWeb3(web3);
     const aContract = new kit.web3.eth.Contract(
-          MecanoAdvertiser,
+          mecanoAdvertiserAbi,
           contractAddress
         );
+    let campaignPrice = await aContract.methods
+          .getCampaignPrice()
+          .call();
     const result = await aContract.methods
       .fundCampaign()
-      .transfer(contractAddress, _price, {from: currentAccount});
+      .send({
+          from : currentAccount,
+          value: campaignPrice
+      });
     return result;
+  }
+  } catch (error) {
+          toast.error(`${error.message}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
   }
 
   const buycampaign = async () => {
@@ -183,7 +204,7 @@ export default function Home() {
         const kit = newKitFromWeb3(web3);
 
         const campaignPortalContract = new kit.web3.eth.Contract(
-          MecanoAdvertiser,
+          mecanoAdvertiserAbi,
           contractAddress
         );
 
@@ -237,7 +258,7 @@ export default function Home() {
               message ? message : "Enjoy Your campaign",
               name ? name : "Anonymous"
             )
-            .send();
+            .send({from: currentAccount});
 
         } catch (error) {
           toast.error(`${error.message}`, {
@@ -298,7 +319,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
-        <title>Launch your Ads campaign</title>
+        <title>Launch your Ads Campaign Today</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -319,7 +340,7 @@ export default function Home() {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="name"
                 >
-                  Name
+                  BrandName
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -336,7 +357,7 @@ export default function Home() {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="message"
                 >
-                  Send the Creator a Message
+                  write a brief description.
                 </label>
 
                 <textarea
@@ -355,7 +376,7 @@ export default function Home() {
                   type="button"
                   onClick={buycampaign}
                 >
-                  Launch $1
+                  Launch $1 cUSD
                 </button>
               </div>
             </form>
