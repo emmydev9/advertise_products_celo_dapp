@@ -140,10 +140,10 @@ export default function Home() {
          */
         const campaignCleaned = campaigns.map((campaign) => {
           return {
-            address: campaign.giver,
+            address: campaign.campaigner,
             timestamp: new Date(campaign.timestamp * 1000),
-            message: campaign.message,
-            name: campaign.name
+            message: campaign.productDescription,
+            name: campaign.productName
           };
         });
 
