@@ -28,6 +28,10 @@ npm run dev
 3. Go to [https://celo.org/developers/faucet](https://celo.org/developers/faucet) and get tokens for the alfajores testnet.
 4. Switch to the alfajores testnet in the CeloExtensionWallet.
 
+## Test 
+To test on replit [Replit](https://replit.com/@EmmanuelNwanya/advertiseproductscelodapp)
+click the run button.
+
 ## Preview
 
 Preview the example live on [Youtube](https://youtu.be/sXcKH2oIMlo):
