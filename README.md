@@ -1,6 +1,6 @@
 # advertise_products_celo_dapp
 
-An Ads dAPP Using Solidity, Celo Smart Contract, ReactJs, and tailwind CSS. It'll be a platform which mimics the google adsense where anyone can advertise their product while utilizing cUSD, with the information being kept on the celo blockchain via an smart contract.
+An Ads dAPP Using Solidity, Celo Smart Contract, ReactJs, and tailwind CSS. It'll be a platform which mimics the google adsense where anyone can advertise their product while utilizing cUSD, with the information being kept on the celo blockchain via a smart contract.
 
 It is built using the next.js framework.
 
